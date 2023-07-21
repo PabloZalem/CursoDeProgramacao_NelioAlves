@@ -1,4 +1,4 @@
-package curso_programacao;
+package SintaxeBasicas;
 
 import java.util.Scanner;
 
