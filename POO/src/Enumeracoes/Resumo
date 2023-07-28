@@ -1,0 +1,10 @@
+Em Java, uma classe `enum` também é uma estrutura de dados que representa um tipo de dado personalizado com um conjunto fixo de constantes nomeadas. 
+Em Java, as `enum`s são usadas para definir um conjunto de valores relacionados e são implementadas como classes especiais.
+
+Aqui estão as características e benefícios das classes `enum` em Java:
+
+1. Declaração clara de constantes: As `enum`s permitem declarar um conjunto de constantes que representam os possíveis valores de um tipo específico. Isso torna o código mais legível e evita o uso de valores literais.
+2. Segurança de tipo: As constantes dentro de uma `enum` têm um tipo específico, o que significa que erros de tipo são capturados em tempo de compilação, garantindo que apenas valores válidos sejam atribuídos.
+3. Intellisense e autocompletar: As IDEs Java oferecem suporte ao preenchimento automático para as `enum`s, facilitando o uso das constantes disponíveis.
+4. Métodos e propriedades: As `enum`s em Java podem ter métodos e campos associados a cada constante, permitindo que você adicione comportamentos específicos para cada valor.
+5. Serialização: As `enum`s em Java são serializáveis por padrão, o que facilita o armazenamento e recuperação de instâncias de `enum` em um formato legível.
