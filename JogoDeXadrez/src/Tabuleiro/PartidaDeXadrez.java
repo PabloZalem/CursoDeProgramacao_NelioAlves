@@ -17,9 +17,38 @@ public class PartidaDeXadrez {
 		return mat;
 	}
 	
+	public PecaDeXadrez performanceParaMoverXadrez(PosicaoNoXadrez posicaoDeOrigem, PosicaoNoXadrez posicaoDeDestino) {
+		Posicao origem = posicaoDeOrigem.ParaPosicao();
+		Posicao destino = posicaoDeDestino.ParaPosicao();
+		validarAPosicao(origem);
+		Peca capturaDaPeca = fazerOMovimento(origem, destino);
+		return (PecaDeXadrez)capturaDaPeca; 
+	}
+	
+	private Peca fazerOMovimento(Posicao origem, Posicao destino) {
+		Peca p = board.removerPeca(origem);
+		Peca pecaCapturada = board.removerPeca(destino);
+		board.lugarDaPeca(p, destino);
+		return pecaCapturada;
+	}
+
+	private void validarAPosicao(Posicao posicao) {
+		if (!board.haPeca(posicao)) {
+			throw new XadrezException("Não há peça na posicao de origem");
+		}
+		if (!board.peca(posicao).TemAlgumaPossibilidadeDeMovimento()) {
+			throw new XadrezException("Não tem possibilidade de movimento");
+		}
+	}
+	
+
+	private void lugarDaNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
+		board.lugarDaPeca(peca, new PosicaoNoXadrez(coluna, linha).ParaPosicao());
+	}
+	
 	private void setupInicial() {
-		board.lugarDaPeca(new Torre(board, Cor.BRANCO), new Posicao(2, 1));
-		board.lugarDaPeca(new Rei(board, Cor.PRETO), new Posicao(1, 4));
-		board.lugarDaPeca(new Rei(board, Cor.BRANCO), new Posicao(7, 4));
+		lugarDaNovaPeca('b',6,new Torre(board, Cor.BRANCO));
+		lugarDaNovaPeca('e',8,new Rei(board, Cor.PRETO));
+		lugarDaNovaPeca('e',1,new Rei(board, Cor.BRANCO));
 	}
 }
