@@ -17,14 +17,28 @@ public class PartidaDeXadrez {
 		return mat;
 	}
 	
+	
+	public boolean[][] possiveisMovimentos(PosicaoNoXadrez posicaoDeOrigem){
+		Posicao posicao = posicaoDeOrigem.ParaPosicao();
+		validarAPosicaoDeInicio(posicao);
+		return board.peca(posicao).possiveisMovimentos();
+	}
+	
 	public PecaDeXadrez performanceParaMoverXadrez(PosicaoNoXadrez posicaoDeOrigem, PosicaoNoXadrez posicaoDeDestino) {
 		Posicao origem = posicaoDeOrigem.ParaPosicao();
 		Posicao destino = posicaoDeDestino.ParaPosicao();
-		validarAPosicao(origem);
+		validarAPosicaoDeInicio(origem);
+		validarAPosicaoFinal(origem,destino);
 		Peca capturaDaPeca = fazerOMovimento(origem, destino);
 		return (PecaDeXadrez)capturaDaPeca; 
 	}
 	
+	private void validarAPosicaoFinal(Posicao origem, Posicao destino) {
+		if(!board.peca(origem).possivelMovimento(destino)) {
+			throw new XadrezException("A peca escolhida nao pode ser mover para a posicao de destino");
+		}
+	}
+
 	private Peca fazerOMovimento(Posicao origem, Posicao destino) {
 		Peca p = board.removerPeca(origem);
 		Peca pecaCapturada = board.removerPeca(destino);
@@ -32,7 +46,7 @@ public class PartidaDeXadrez {
 		return pecaCapturada;
 	}
 
-	private void validarAPosicao(Posicao posicao) {
+	private void validarAPosicaoDeInicio(Posicao posicao) {
 		if (!board.haPeca(posicao)) {
 			throw new XadrezException("Não há peça na posicao de origem");
 		}

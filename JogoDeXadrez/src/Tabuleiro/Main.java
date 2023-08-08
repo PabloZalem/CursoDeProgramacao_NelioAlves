@@ -15,6 +15,10 @@ public class Main {
 				System.out.print("Origem: ");
 				PosicaoNoXadrez origem = UI.leiaAPosicaoDoXadrez(sc);
 				
+				boolean[][] possivelMovimento = xadrez.possiveisMovimentos(origem);
+				UI.printBoard(null);
+				UI.printBoard(xadrez.getPecas(), possivelMovimento);
+				
 				System.out.println();
 				System.out.print("Destino: ");
 				PosicaoNoXadrez destino = UI.leiaAPosicaoDoXadrez(sc);
