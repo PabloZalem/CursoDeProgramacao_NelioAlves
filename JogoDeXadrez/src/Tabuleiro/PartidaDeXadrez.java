@@ -188,8 +188,6 @@ public class PartidaDeXadrez {
 	}
 
 	private void setupInicial() {
-		lugarDaNovaPeca('b', 6, new Torre(board, Cor.BRANCO));
-		lugarDaNovaPeca('e', 8, new Rei(board, Cor.PRETO));
-		lugarDaNovaPeca('e', 1, new Rei(board, Cor.BRANCO));
+		
 	}
 }
