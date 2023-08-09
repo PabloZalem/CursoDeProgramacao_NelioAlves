@@ -1,16 +1,19 @@
 package Tabuleiro;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
 		PartidaDeXadrez xadrez = new PartidaDeXadrez();
 		Scanner sc = new Scanner(System.in);
+		List<PecaDeXadrez> capturados = new ArrayList<>();
 		
-		while(true) {
+		while(!xadrez.getChequeMate()) {
 			try {
-				UI.printBoard(xadrez.getPecas());
+				UI.imprimirPartida(xadrez,capturados);
 				System.out.println();
 				System.out.print("Origem: ");
 				PosicaoNoXadrez origem = UI.leiaAPosicaoDoXadrez(sc);
@@ -24,6 +27,10 @@ public class Main {
 				PosicaoNoXadrez destino = UI.leiaAPosicaoDoXadrez(sc);
 				
 				PecaDeXadrez pecaCapturada = xadrez.performanceParaMoverXadrez(origem, destino);
+				
+				if (pecaCapturada != null) {
+					capturados.add(pecaCapturada);
+				}
 			}catch(XadrezException e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
@@ -32,5 +39,7 @@ public class Main {
 				sc.nextLine();
 			}
 		}
+		
+		UI.imprimirPartida(xadrez, capturados);
 	}
 }
