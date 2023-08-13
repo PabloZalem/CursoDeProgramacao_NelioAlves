@@ -1,6 +1,6 @@
 package MudancaParaInterface;
 
-public class Retangulo extends Formato{
+public class Retangulo extends FormatoAbstrato{
 	private Double largura;
 	private Double altura;
 	

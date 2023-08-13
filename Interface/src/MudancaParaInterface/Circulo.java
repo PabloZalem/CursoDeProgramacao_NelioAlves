@@ -1,6 +1,6 @@
 package MudancaParaInterface;
 
-public class Circulo extends Formato{
+public class Circulo extends FormatoAbstrato{
 	private Double raio;
 
 	public Circulo(Cor cor, Double raio) {

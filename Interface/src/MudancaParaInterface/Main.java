@@ -2,8 +2,8 @@ package MudancaParaInterface;
 
 public class Main {
 	public static void main(String[] args) {
-		Formato f1 = new Circulo(Cor.PRETO, 2.0);
-		Formato f2 = new Retangulo(Cor.BRANCO, 3.0, 4.0);
+		FormatoAbstrato f1 = new Circulo(Cor.PRETO, 2.0);
+		FormatoAbstrato f2 = new Retangulo(Cor.BRANCO, 3.0, 4.0);
 		
 		System.out.print("Cor do circulo: " + f1.getCor());
 		System.out.println();
