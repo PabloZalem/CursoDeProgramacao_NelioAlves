@@ -9,7 +9,7 @@ import com.projetoweb.entities.Usuario;
 
 @RestController
 @RequestMapping(value="/usuarios")
-public class UserResource {
+public class UserResource{
 	//criar endpoint controlador rest do usuario
 	
 	@GetMapping

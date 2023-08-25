@@ -25,6 +25,4 @@ public class ConfiguracaoDeTeste implements CommandLineRunner{
 		//instanciar banco de dados
 		repositorioDoUsuario.saveAll(Arrays.asList(u1, u2));
 	}
-	
-	
 }
