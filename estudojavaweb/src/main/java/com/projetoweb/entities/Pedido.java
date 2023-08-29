@@ -2,10 +2,12 @@ package com.projetoweb.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+import com.projetoweb.enums.StatusDoPedido;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,20 +30,30 @@ public class Pedido implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GTM")
 	private Instant momento;
 	
+	private Integer statusDoPedido;
 	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Usuario usuario;
+	
+	
+	@OneToMany(mappedBy = "itemDoPedidoPK.pedido")
+	private Set<ItemDoPedido> itemDoPedido = new HashSet<>();
 
-	public Pedido(Long id, Instant momento, Usuario usuario) {
+	public Pedido(Long id, Instant momento, StatusDoPedido statusDoPedido, Usuario usuario) {
 		this.id = id;
 		this.momento = momento;
+		setStatusDoPedido(statusDoPedido);
 		this.usuario = usuario;
 	}
 
 	public Pedido() {
 	}
 
+	public Set<ItemDoPedido> getIntemDoPedido(){
+		return itemDoPedido;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +76,16 @@ public class Pedido implements Serializable{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public StatusDoPedido getStatusDoPedido() {
+		return StatusDoPedido.valor(statusDoPedido);
+	}
+
+	public void setStatusDoPedido(StatusDoPedido statusDoPedido) {
+		if (statusDoPedido != null) {
+			this.statusDoPedido = statusDoPedido.getCodigo();
+		}
 	}
 
 	@Override
