@@ -8,6 +8,8 @@ import java.util.Set;
 import org.hibernate.annotations.ManyToAny;
 import org.springframework.web.bind.annotation.Mapping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -38,6 +41,9 @@ public class Produto implements Serializable{
 	, inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categoria> categorias = new HashSet<>();
 	
+	@OneToMany(mappedBy = "itemDoPedidoPK.produto")
+	private Set<ItemDoPedido> items = new HashSet<>();
+	
 	public Produto() {
 	}
 	
@@ -48,6 +54,16 @@ public class Produto implements Serializable{
 		this.preco = preco;
 		this.imgUrl = imgUrl;
 	}
+	
+	@JsonIgnore
+	public Set<Pedido> getPedido(){
+		Set<Pedido> set = new HashSet<>();
+		for(ItemDoPedido x : items) {
+			set.add(x.getPedido());
+		}
+		return set;
+	}
+	
 	public Long getId() {
 		return id;
 	}

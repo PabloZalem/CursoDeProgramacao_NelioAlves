@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.projetoweb.entities.Categoria;
 import com.projetoweb.entities.ItemDoPedido;
+import com.projetoweb.entities.Pagamento;
 import com.projetoweb.entities.Pedido;
 import com.projetoweb.entities.Produto;
 import com.projetoweb.entities.Usuario;
@@ -67,7 +68,7 @@ public class ConfiguracaoDeTeste implements CommandLineRunner{
 		Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		
-		Pedido pro1 = new Pedido(null, Instant.parse("2019-06-20T19:53:07Z"), StatusDoPedido.AGUARDANDO_PAGAMENTO, u1); 
+		Pedido pro1 = new Pedido(null, Instant.parse("2019-06-20T19:53:07Z"), StatusDoPedido.PAGO, u1); 
 		Pedido pro2 = new Pedido(null, Instant.parse("2019-07-21T03:42:10Z"), StatusDoPedido.ENTREGUE, u2); 
 		Pedido pro3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), StatusDoPedido.ENVIADO, u1);
 		//instanciar banco de dados
@@ -79,5 +80,9 @@ public class ConfiguracaoDeTeste implements CommandLineRunner{
 		ItemDoPedido oi3 = new ItemDoPedido(pro2, p3, 2, p3.getPreco());
 		ItemDoPedido oi4 = new ItemDoPedido(pro3, p5, 2, p5.getPreco()); 
 		repositorioDePedidoDoItem.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Pagamento pay1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"),pro1);
+		pro1.setPagamento(pay1);
+		repositorioDePedido.save(pro1);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projetoweb.enums.StatusDoPedido;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,6 +41,10 @@ public class Pedido implements Serializable{
 	
 	@OneToMany(mappedBy = "itemDoPedidoPK.pedido")
 	private Set<ItemDoPedido> itemDoPedido = new HashSet<>();
+	
+	@OneToOne(mappedBy = "pedido",
+			cascade = CascadeType.ALL)
+	private Pagamento pagamento;
 
 	public Pedido(Long id, Instant momento, StatusDoPedido statusDoPedido, Usuario usuario) {
 		this.id = id;
@@ -48,6 +54,14 @@ public class Pedido implements Serializable{
 	}
 
 	public Pedido() {
+	}
+	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
 	public Set<ItemDoPedido> getIntemDoPedido(){
@@ -86,6 +100,14 @@ public class Pedido implements Serializable{
 		if (statusDoPedido != null) {
 			this.statusDoPedido = statusDoPedido.getCodigo();
 		}
+	}
+	
+	public Double getTotal() {
+		double soma = 0.0;
+		for (ItemDoPedido x : itemDoPedido) {
+			soma += x.getSubTotal();
+		}
+		return soma;
 	}
 
 	@Override
