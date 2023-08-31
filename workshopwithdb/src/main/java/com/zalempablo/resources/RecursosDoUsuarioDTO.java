@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.zalempablo.domain.Post;
 import com.zalempablo.domain.Usuario;
 import com.zalempablo.dto.UsuarioDTO;
 import com.zalempablo.service.ServicoDoUsuario;
@@ -34,8 +35,7 @@ public class RecursosDoUsuarioDTO {
 	
 	@RequestMapping(value = "/{id}",  method = RequestMethod.GET)
 	public ResponseEntity<UsuarioDTO> findById(@PathVariable String id){
-		Usuario usuario = servicoDoUsuario.findById(id); 
-		
+		Usuario usuario = servicoDoUsuario.findById(id); 	
 		return ResponseEntity.ok().body(new UsuarioDTO(usuario));
 	}
 	
@@ -60,5 +60,11 @@ public class RecursosDoUsuarioDTO {
 		usuario.setId(id);
 		usuario = servicoDoUsuario.update(usuario);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}/posts",  method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		Usuario usuario = servicoDoUsuario.findById(id); 	
+		return ResponseEntity.ok().body(usuario.getPosts());
 	}
 }
